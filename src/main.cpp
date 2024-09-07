@@ -20,6 +20,9 @@ int main()
 
     read_n_lines(onegin_text, 16, 42, file_onegin_input);
 
+    bubble_sort(onegin_text);
+
+    printf("Sorted_onegin:----------------------------------\n");
     for (int i = 0; i < 16; i++)
     {
         for (int j = 0; j<42; j++)
@@ -28,6 +31,7 @@ int main()
         }
         printf("\n");
     }
+    printf("End sorted onegin------------------------------\n");
 
     return EXIT_SUCCESS;
 }
