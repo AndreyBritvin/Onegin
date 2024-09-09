@@ -38,11 +38,14 @@ int open_file(FILE **fp, const char filename[])
     return 0;
 }
 
-int get_file_len(FILE *fp)
+__off_t get_file_len(FILE *fp)
 {
-    fseek(fp, 0, SEEK_END);
-    int size =ftell(fp);
-    fseek(fp, 0, SEEK_SET);
+    struct stat st;
+    fstat(fileno(fp), &st);
 
-    return size;
+    // fseek(fp, 0, SEEK_END);
+    // int size = ftell(fp);
+    // fseek(f  p, 0, SEEK_SET);
+
+    return st.st_size;
 }

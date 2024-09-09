@@ -36,11 +36,11 @@ int my_strcmp(char *str_1, char *str_2)
 {
     for (int i = 0, j = 0; str_1[i] != '\0' && str_2[j] != '\0'; i++, j++)
     {
-        while (!isalnum(str_1[i]))
+        while (!isalnum(str_1[i]) && str_1[i] != '\0')
         {
             i++;
         }
-        while (!isalnum(str_2[j]))
+        while (!isalnum(str_2[j]) && str_2[j] != '\0')
         {
             j++;
         }
