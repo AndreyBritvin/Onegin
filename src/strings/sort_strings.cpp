@@ -13,8 +13,8 @@ int bubble_sort(Line *ptrs_to_sort, size_t ptrs_num, comparator_t cmp_func) // c
             {
                 swap_strings(&(ptrs_to_sort[j].line), &(ptrs_to_sort[j + 1].line));
             }
-            DEBUG_ON(printf("\ni = %lu j = %lu\n%s\n%s\n = %d\n", i, j, ptrs_to_sort[j], ptrs_to_sort[j + 1],
-                                    cmp_func(ptrs_to_sort[j].line, ptrs_to_sort[j + 1].line));)
+            // DEBUG_ON(printf("\ni = %lu j = %lu\n%s\n%s\n = %d\n", i, j, ptrs_to_sort[j], ptrs_to_sort[j + 1],
+                                    // cmp_func(ptrs_to_sort[j].line, ptrs_to_sort[j + 1].line));)
         }
 
         DEBUG_ON(
@@ -28,7 +28,7 @@ int bubble_sort(Line *ptrs_to_sort, size_t ptrs_num, comparator_t cmp_func) // c
                 printf("\n");
             }
             printf("End debug onegin-----------------------------\n");
-        )
+                )
     }
 
     return 0;
