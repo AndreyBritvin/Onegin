@@ -1,51 +1,111 @@
 #include "read_from_file.h"
 
-int read_line(char input_array[], FILE *fp)
+size_t read_line(char input_array[])
 {
     char ch = 0;
-    int index = 0;
+    int index = -1;
 
-    while (fscanf(fp, "%c", &ch) != EOF && ch != '\n')
+    while ((ch = input_array[++index]) != EOF && ch != '\n')
     {
-        input_array[index++] = ch;
+        DEBUG_ON(printf("<%c> (%d)", ch, ch);)
     }
 
-    // printf("Index at addr[%p] = %d", input_array, index);
+    DEBUG_ON(printf("Index at addr[%p] = %d", input_array, index);)
     input_array[index++] = '\0';
-    // printf("String: %c\n", input_array[index]);
+    DEBUG_ON(printf("String: %c\n", input_array[index]);)
     return index;
 }
 
-int read_n_lines(char input_array[], char *input_ptrs[], size_t lines, FILE *fp)
+int read_n_lines(char *input_array, Line *input_ptrs, size_t lines)
 {
+    assert(input_array != NULL);
+    assert(input_ptrs != NULL);
+
     for (size_t i = 0; i < lines; i++)
     {
-        input_ptrs[i] = input_array;
-        input_array += read_line(input_array, fp);
-        // printf("%p\n", input_array);
+        DEBUG_ON(printf("%p\n", input_array));
+        // input_ptrs[i] = {input_array, read_line(input_array)};
+        input_ptrs[i].line = input_array;
+        input_array += (input_ptrs[i].len = read_line(input_array));
+        DEBUG_ON(printf("input_ptrs[i] = %p\n", (*(input_ptrs + i)));)
     }
 
     return 0;
 }
 
-int open_file(FILE **fp, const char filename[])
+int init_file(Text *text)
 {
-    if ((*fp = fopen(filename, "r")) == NULL)
+    assert(text != NULL);
+
+    fread(text->full_text, text->filesize, 1, text->file_ptr);
+    DEBUG_ON(printf("Success in reading file %s\n", text->filename));
+
+    text->lines_num = get_lines_num(text->full_text, text->filesize);
+    DEBUG_ON(printf("Lines in file:%lu\n", text->lines_num));
+
+    text->text_ptrs = (Line *) calloc(text->lines_num + 1, sizeof(Line));
+
+    if (text->text_ptrs == NULL)
+    {
+        fprintf(stderr, "Error in calloc in line: %d\n", __LINE__);
+        return 1;
+    }
+
+    read_n_lines(text->full_text, text->text_ptrs, text->lines_num);
+
+    return 0;
+}
+
+int work_file(const char *mode, Text *text, Parse_file parse_file)
+{
+    assert(text != NULL);
+    assert(mode != NULL);
+    assert(parse_file != NULL);
+
+    FILE *file_input = NULL;
+
+    if ((file_input = fopen(text->filename, mode)) == NULL)
     {
         return errno;
     }
 
+    text->file_ptr = file_input;
+    parse_file(text);
+    text->file_ptr = NULL;
+
+    if (fclose(file_input))
+    {
+        return errno;
+    }
+
+    DEBUG_ON(printf("Success in closing file %s\n", text->filename);)
+
     return 0;
 }
 
-__off_t get_file_len(FILE *fp)
+__off_t get_file_len(const char *filename)
 {
-    struct stat st;
-    fstat(fileno(fp), &st);
+    assert(filename != NULL);
 
-    // fseek(fp, 0, SEEK_END);
-    // int size = ftell(fp);
-    // fseek(f  p, 0, SEEK_SET);
+    struct stat st = {};
+    stat(filename, &st);
 
     return st.st_size;
+}
+
+size_t get_lines_num(char *text, size_t text_len)
+{
+    assert(text != NULL);
+
+    size_t lines_num = 0;
+
+    for (size_t symbol = 0; symbol < text_len; symbol++)
+    {
+        if (text[symbol] == '\n')
+        {
+            lines_num++;
+        }
+    }
+
+    return lines_num;
 }

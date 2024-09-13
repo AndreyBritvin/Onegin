@@ -3,42 +3,45 @@
 #include <string.h>
 
 #include "read_from_file.h"
+#include "write_to_file.h"
+
 #include "sort_strings.h"
 #include "swap_strings.h"
 
 int main()
 {
-    const int lines_amount = 1000;
-    // const char filename[] = "texts/test/test_symbols.txt";
-    const char filename[] = "texts/input/onegin_english.txt";
+    struct Text Onegin = {};
 
-    FILE *file_onegin_input = NULL;
+    Onegin.filename = "texts/test/test_symbols.txt";
+    //Onegin.filename = "texts/input/onegin_english.txt";
 
-    if (int err_num = open_file(&file_onegin_input, filename))
+    Onegin.filesize = (size_t) get_file_len(Onegin.filename);
+    DEBUG_ON(printf("File size: %lu\n", Onegin.filesize);)
+
+    Onegin.full_text = (char  *) calloc(Onegin.filesize + 1, sizeof(char));
+
+    if (Onegin.full_text == NULL)
     {
-        printf("Error in opening file: %s", strerror(err_num));
+        fprintf(stderr, "Error in calloc for <onegin_text> with size: %lu\n", Onegin.filesize);
         return EXIT_FAILURE;
     }
 
-    printf("File size: %ld\n", get_file_len(file_onegin_input));
-
-    char *onegin_text = (char *) calloc((size_t) get_file_len(file_onegin_input), sizeof(char));
-    char *onegin_ptrs[lines_amount] = {};
-
-    read_n_lines(onegin_text, onegin_ptrs, lines_amount, file_onegin_input);
-    printf("First chars:<%c>(%d) <%c>(%d) <%c>(%d)\n", onegin_text[0], onegin_text[0],
-                       onegin_text[1], onegin_text[1], onegin_text[2], onegin_text[2]);
-
-    bubble_sort(onegin_ptrs, lines_amount);
-
-    printf("Sorted_onegin:----------------------------------\n\n");
-    for (int i = 0; i < lines_amount; i++)
+    if (int err_num = work_file("r", &Onegin, init_file))
     {
-        printf("%s\n", onegin_ptrs[i]);
+        fprintf(stderr, "Error in reading file <%s>:%s\n", Onegin.filename, strerror(err_num));
     }
-    printf("\nEnd sorted onegin------------------------------\n");
+    DEBUG_ON(print_text(Onegin.text_ptrs, Onegin.lines_num);)
+    bubble_sort(Onegin.text_ptrs, Onegin.lines_num, my_strcmp_begin);
+    print_text(Onegin.text_ptrs, Onegin.lines_num);
 
-    free(onegin_text);
+    Onegin.filename = "texts/output/onegin_english.txt";
+    if (int err_num = work_file("w", &Onegin, write_to_file))
+    {
+        fprintf(stderr, "Error in writing file <%s>:%s\n", Onegin.filename, strerror(err_num));
+    }
+
+    free(Onegin.full_text);
+    free(Onegin.text_ptrs);
 
     return EXIT_SUCCESS;
 }

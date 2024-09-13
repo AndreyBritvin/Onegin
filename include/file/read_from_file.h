@@ -2,16 +2,42 @@
 #define READ_FROM_FILE_H_
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
 #include <errno.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
-int read_line(char input_array[], FILE *fp);
+#include "macros.h"
 
-int read_n_lines(char input_array[], char *input_ptrs[], size_t lines, FILE *fp);
+struct Line
+{
+    char              *line;
+    size_t              len;
+};
 
-int open_file(FILE **fp, const char filename[]);
+struct Text
+{
+    char         *full_text;
+    Line         *text_ptrs;
+    size_t         filesize;
+    size_t        lines_num;
+    const char    *filename;
+    FILE          *file_ptr;
+};
 
-__off_t get_file_len(FILE *fp);
+typedef int (*Parse_file)(Text *);
+
+size_t read_line(char *input_array);
+
+int read_n_lines(char *input_array, Line *input_ptrs, size_t lines);
+
+int init_file(Text *text);
+
+int work_file(const char *mode, Text *text, Parse_file parse_func);
+
+__off_t get_file_len(const char *filename);
+
+size_t get_lines_num(char *text, size_t text_len);
 
 #endif // READ_FROM_FILE_H_

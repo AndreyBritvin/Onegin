@@ -1,38 +1,73 @@
 #include "sort_strings.h"
 
-int bubble_sort(char *ptrs_to_sort[], int ptrs_num)
+int bubble_sort(Line *ptrs_to_sort, size_t ptrs_num, comparator_t cmp_func) // compareFunc_t func1
 {
-    for (int i = 0; i < ptrs_num; i++)
+    assert(ptrs_to_sort != NULL);
+    assert(cmp_func     != NULL);
+
+    for (size_t i = 0; i < ptrs_num; i++)
     {
-        for (int j = 0; j < ptrs_num - i - 2; j++)
+        for (size_t j = 0; j < ptrs_num - i - 1; j++)
         {
-            if (my_strcmp(ptrs_to_sort[j], ptrs_to_sort[j + 1]) > 0)
+            if (cmp_func(ptrs_to_sort[j].line, ptrs_to_sort[j + 1].line) > 0)
             {
-                swap_strings(&ptrs_to_sort[j], &ptrs_to_sort[j + 1]);
+                swap_strings(&(ptrs_to_sort[j].line), &(ptrs_to_sort[j + 1].line));
             }
-            // printf("\ni = %d j = %d\n%s\n%s\n = %d\n", i, j, text_to_sort[j], text_to_sort[j + 1],
-                                        //  my_strcmp(text_to_sort[j], text_to_sort[j + 1]));
+            DEBUG_ON(printf("\ni = %lu j = %lu\n%s\n%s\n = %d\n", i, j, ptrs_to_sort[j], ptrs_to_sort[j + 1],
+                                    cmp_func(ptrs_to_sort[j].line, ptrs_to_sort[j + 1].line));)
         }
 
-        if (0)
-        {
-            printf("debug_onegin %d:----------------------------------!!!!!!!!!!\n", i);
-            for (int k = 0; k < ptrs_num; k++)
+        DEBUG_ON(
+            printf("debug_onegin %lu:---------------------------------!!!!!!!!!!\n", i);
+            for (size_t k = 0; k < ptrs_num; k++)
             {
-                for (int h = 0; h < 3; h++)
+                for (size_t h = 0; h < 3; h++)
                 {
-                    printf("<%c>(%d)", ptrs_to_sort[k][h], ptrs_to_sort[k][h]);
+                    printf("<%c>(%d)", ptrs_to_sort[k].line[h], ptrs_to_sort[k].line[h]);
                 }
                 printf("\n");
             }
-            printf("End debug onegin------------------------------\n");
+            printf("End debug onegin-----------------------------\n");
+        )
+    }
+
+    return 0;
+}
+
+int my_strcmp_begin(void *vstr_1, void *vstr_2)
+{
+    assert(vstr_1 != NULL);
+    assert(vstr_2 != NULL);
+
+    char *str_1 = (char *) vstr_1;
+    char *str_2 = (char *) vstr_2;
+
+    for (int i = 0, j = 0; str_1[i] != '\0' && str_2[j] != '\0'; i++, j++)
+    {
+        while (!isalnum(str_1[i]) && str_1[i] != '\0')
+        {
+            i++;
+        }
+        while (!isalnum(str_2[j]) && str_2[j] != '\0')
+        {
+            j++;
+        }
+
+        if (tolower(str_1[i]) != tolower(str_2[j]))
+        {
+            DEBUG_ON(
+            printf("ch1 =<%c>   %d, ch2 =<%c>   %d,\n"
+                   "tolower1 = %d, tolower2 = %d\n", str_1[i], str_1[i], str_2[j], str_2[j], tolower(str_1[i]), tolower(str_2[j]));
+            )
+
+            return tolower(str_1[i]) - tolower(str_2[j]);
         }
     }
 
     return 0;
 }
 
-int my_strcmp(char *str_1, char *str_2)
+int my_strcmp_end(char *str_1, char *str_2) // TODO: redo this func
 {
     for (int i = 0, j = 0; str_1[i] != '\0' && str_2[j] != '\0'; i++, j++)
     {
