@@ -15,6 +15,8 @@ typedef int (*comparator_t)(void *, void *);
 
 int bubble_sort(Line *text_to_sort, size_t ptrs_num, comparator_t cmp_func);
 
+char *skip_non_alpha(char *str_ptr);
+
 int my_strcmp_begin(void *str_1, void *str_2);
 int my_strcmp_end(char *str_1, char *str_2);
 

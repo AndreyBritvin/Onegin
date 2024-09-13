@@ -34,6 +34,18 @@ int bubble_sort(Line *ptrs_to_sort, size_t ptrs_num, comparator_t cmp_func) // c
     return 0;
 }
 
+char *skip_non_alpha(char *str_ptr)
+{
+    assert(str_ptr != NULL);
+
+    while (!isalnum(*str_ptr) && *str_ptr != '\0')
+    {
+        str_ptr++;
+    }
+
+    return str_ptr;
+}
+
 int my_strcmp_begin(void *vstr_1, void *vstr_2)
 {
     assert(vstr_1 != NULL);
@@ -42,25 +54,19 @@ int my_strcmp_begin(void *vstr_1, void *vstr_2)
     char *str_1 = (char *) vstr_1;
     char *str_2 = (char *) vstr_2;
 
-    for (int i = 0, j = 0; str_1[i] != '\0' && str_2[j] != '\0'; i++, j++)
+    for (; *str_1 != '\0' && *str_2 != '\0'; str_1++, str_2++)
     {
-        while (!isalnum(str_1[i]) && str_1[i] != '\0')
-        {
-            i++;
-        }
-        while (!isalnum(str_2[j]) && str_2[j] != '\0')
-        {
-            j++;
-        }
+        str_1 = skip_non_alpha(str_1);
+        str_2 = skip_non_alpha(str_2);
 
-        if (tolower(str_1[i]) != tolower(str_2[j]))
+        if (tolower(*str_1) != tolower(*str_2))
         {
             DEBUG_ON(
             printf("ch1 =<%c>   %d, ch2 =<%c>   %d,\n"
-                   "tolower1 = %d, tolower2 = %d\n", str_1[i], str_1[i], str_2[j], str_2[j], tolower(str_1[i]), tolower(str_2[j]));
+                   "tolower1 = %d, tolower2 = %d\n", *str_1, *str_1, *str_2, *str_2, tolower(*str_1), tolower(*str_2));
             )
 
-            return tolower(str_1[i]) - tolower(str_2[j]);
+            return tolower(*str_1) - tolower(*str_2);
         }
     }
 
