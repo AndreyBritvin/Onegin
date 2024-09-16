@@ -3,16 +3,19 @@
 size_t read_line(char input_array[])
 {
     char ch = 0;
-    int index = -1;
+    size_t index = 0;
 
-    while ((ch = input_array[++index]) != EOF && ch != '\n')
+    while ((ch = input_array[index++]) != EOF && ch != '\n')
     {
         DEBUG_ON(printf("<%c> (%d)", ch, ch);)
     }
 
-    DEBUG_ON(printf("Index at addr[%p] = %d", input_array, index);)
+    index--;
+
+    DEBUG_ON(printf("Index at addr[%p] = %lu", input_array, index);)
     input_array[index++] = '\0';
     DEBUG_ON(printf("String: %c\n", input_array[index]);)
+
     return index;
 }
 
@@ -26,18 +29,18 @@ int read_n_lines(char *input_array, Line *input_ptrs, size_t lines)
         DEBUG_ON(printf("%p\n", input_array));
         // input_ptrs[i] = {input_array, read_line(input_array)};
         input_ptrs[i].line = input_array;
-        input_array += (input_ptrs[i].len = read_line(input_array));
-        DEBUG_ON(printf("input_ptrs[i] = %p\n", (*(input_ptrs + i)));)
+        input_array += (input_ptrs[i].len = read_line(input_array) - 1) + 1;
+        // DEBUG_ON(printf("input_ptrs[i] = %s, size = %d\n", input_ptrs[i].line, input_ptrs[i].len);)
     }
 
     return 0;
 }
 
-int init_file(Text *text)
+int init_file(Text *text, FILE *file_ptr)// TODO: file from Text struct delete and make func to fill Text
 {
     assert(text != NULL);
 
-    fread(text->full_text, text->filesize, 1, text->file_ptr);
+    fread(text->full_text, text->filesize, 1, file_ptr);
     DEBUG_ON(printf("Success in reading file %s\n", text->filename));
 
     text->lines_num = get_lines_num(text->full_text, text->filesize);
@@ -47,7 +50,7 @@ int init_file(Text *text)
 
     if (text->text_ptrs == NULL)
     {
-        fprintf(stderr, "Error in calloc in line: %d\n", __LINE__);
+        fprintf(stderr, "Error in calloc in line: %d\n", __LINE__); // TODO: Error enum / maybe lib
         return 1;
     }
 
@@ -58,8 +61,8 @@ int init_file(Text *text)
 
 int work_file(const char *mode, Text *text, Parse_file parse_file)
 {
-    assert(text != NULL);
-    assert(mode != NULL);
+    assert(text       != NULL);
+    assert(mode       != NULL);
     assert(parse_file != NULL);
 
     FILE *file_input = NULL;
@@ -69,9 +72,7 @@ int work_file(const char *mode, Text *text, Parse_file parse_file)
         return errno;
     }
 
-    text->file_ptr = file_input;
-    parse_file(text);
-    text->file_ptr = NULL;
+    parse_file(text, file_input);
 
     if (fclose(file_input))
     {

@@ -7,17 +7,19 @@ int print_text(Line *onegin_ptrs, size_t lines_amount)
     {
         printf("%s\n", onegin_ptrs[i].line);
     }
-    printf("\nEnd sorted onegin------------------------------\n");
+
+    printf("\n");
+    printf("End sorted onegin------------------------------\n");
 
     return 0;
 }
 
-int write_to_file(Text *text)
+int write_to_file(Text *text, FILE *file_ptr)
 {
-    fprintf(text->file_ptr, "Sorted left edge Onegin:\n\n");
+    fprintf(file_ptr, "Sorted left edge Onegin:\n\n");
     for (size_t i = 0; i < text->lines_num; i++)
     {
-        fprintf(text->file_ptr, "%s\n", text->text_ptrs[i].line);
+        fprintf(file_ptr, "%s\n", text->text_ptrs[i].line);
     }
 
     /*

@@ -6,6 +6,6 @@
 
 int print_text(Line *onegin_ptrs, size_t lines_amount);
 
-int write_to_file(Text *text);
+int write_to_file(Text *text, FILE *file_ptr);
 
 #endif // WRITE_TO_FILE_H_
