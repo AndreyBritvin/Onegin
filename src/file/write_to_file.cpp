@@ -5,6 +5,7 @@ int print_text(Line *onegin_ptrs, size_t lines_amount)
     printf("Sorted_onegin:----------------------------------\n\n");
     for (size_t i = 0; i < lines_amount; i++)
     {
+        printf("%p\n", onegin_ptrs[i].line);
         printf("%s\n", onegin_ptrs[i].line);
     }
 
@@ -16,25 +17,24 @@ int print_text(Line *onegin_ptrs, size_t lines_amount)
 
 int write_to_file(Text *text, FILE *file_ptr)
 {
-    fprintf(file_ptr, "Sorted left edge Onegin:\n\n");
+    fprintf(file_ptr, "Sorted right edge MeOwnegin:\n\n");
     for (size_t i = 0; i < text->lines_num; i++)
     {
-        fprintf(file_ptr, "%s\n", text->text_ptrs[i].line);
+        fprintf(file_ptr, "%s\n", text->text_ptrs_right[i].line);
     }
 
-    /*
-    fprintf(text->file_ptr, "Sorted right edge Onegin:\n\n");
+    fprintf(file_ptr, "Sorted right edge MeOwnegin:\n\n");
     for (size_t i = 0; i < text->lines_num; i++)
     {
-        fprintf(text->file_ptr, "%s\n", text->text_ptrs[i].line);
+        fprintf(file_ptr, "%s\n", text->text_ptrs_left[i].line);
     }
 
-    fprintf(text->file_ptr, "Original Onegin:\n\n");
+    fprintf(file_ptr, "Original Onegin:\n\n");
+    char *full_text = text->full_text;
     for (size_t i = 0; i < text->lines_num; i++)
     {
-        fprintf(text->file_ptr, "%s\n", text->full_text[i]);
+        full_text += fprintf(file_ptr, "%s\n", full_text);
     }
-    */
 
     return 0;
 }

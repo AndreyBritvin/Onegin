@@ -22,7 +22,7 @@ size_t read_line(char input_array[])
 int read_n_lines(char *input_array, Line *input_ptrs, size_t lines)
 {
     assert(input_array != NULL);
-    assert(input_ptrs != NULL);
+    assert(input_ptrs  != NULL);
 
     for (size_t i = 0; i < lines; i++)
     {
@@ -46,15 +46,26 @@ int init_file(Text *text, FILE *file_ptr)
     text->lines_num = get_lines_num(text->full_text, text->filesize);
     DEBUG_ON(printf("Lines in file:%lu\n", text->lines_num));
 
-    text->text_ptrs = (Line *) calloc(text->lines_num + 1, sizeof(Line));
+    text->text_ptrs_right = (Line *) calloc(text->lines_num + 1, sizeof(Line));
 
-    if (text->text_ptrs == NULL)
+    if (text->text_ptrs_right == NULL)
     {
         fprintf(stderr, "Error in calloc in line: %d\n", __LINE__); // TODO: Error enum / maybe lib
         return 1;
     }
 
-    read_n_lines(text->full_text, text->text_ptrs, text->lines_num);
+    text->text_ptrs_left = (Line *) calloc(text->lines_num + 1, sizeof(Line));
+
+    if (text->text_ptrs_left == NULL)
+    {
+        fprintf(stderr, "Error in calloc in line: %d\n", __LINE__); // TODO: Error enum / maybe lib
+
+        return 1;
+    }
+
+    read_n_lines(text->full_text, text->text_ptrs_right, text->lines_num);
+    memcpy(text->text_ptrs_left, text->text_ptrs_right, text->lines_num * sizeof(Line));
+    printf("Size of pointers = %lu\n", sizeof(text->text_ptrs_right));
 
     return 0;
 }

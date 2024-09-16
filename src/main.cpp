@@ -34,15 +34,20 @@ int main()
         return EXIT_FAILURE;
     }
 
-    DEBUG_ON(print_text(Onegin.text_ptrs, Onegin.lines_num);)
+    DEBUG_ON(print_text(Onegin.text_ptrs_right, Onegin.lines_num);)
     DEBUG_ON(
         for (size_t i = 0; i < Onegin.lines_num; i++)
         {
-            printf("Len %lu of line %s\n", Onegin.text_ptrs[i].len, Onegin.text_ptrs[i].line);
+            printf("Len %lu of line %s\n", Onegin.text_ptrs_left[i].len, Onegin.text_ptrs_left[i].line);
         }
-    );
-    bubble_sort(Onegin.text_ptrs, Onegin.lines_num, sizeof(Line), my_strcmp_end);
-    print_text(Onegin.text_ptrs, Onegin.lines_num);
+            )
+
+    bubble_sort(Onegin.text_ptrs_right, Onegin.lines_num, sizeof(Line), my_strcmp_begin);
+    DEBUG_ON(printf("Ended begin sort. Now gonna meowdoing left sort--------------------------------------------------\n"));
+    bubble_sort(Onegin.text_ptrs_left,  Onegin.lines_num, sizeof(Line), my_strcmp_end);
+
+    print_text(Onegin.text_ptrs_right, Onegin.lines_num);
+    print_text(Onegin.text_ptrs_left, Onegin.lines_num);
 
     Onegin.filename = "texts/output/onegin_english.txt";
     if (int err_num = work_file("w", &Onegin, write_to_file))
@@ -53,7 +58,8 @@ int main()
     }
 
     free(Onegin.full_text);
-    free(Onegin.text_ptrs); // Add Destroy (All to zeros)
+    free(Onegin.text_ptrs_left);
+    free(Onegin.text_ptrs_right); // Add Destroy (All to zeros)
 
     return EXIT_SUCCESS;
 }

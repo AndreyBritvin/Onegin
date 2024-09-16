@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <errno.h>
+#include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -12,17 +13,18 @@
 
 struct Line
 {
-    char              *line;
-    size_t              len;
+    char                  *line;
+    size_t                  len;
 };
 
 struct Text
 {
-    char         *full_text;
-    Line         *text_ptrs;
-    size_t         filesize;
-    size_t        lines_num;
-    const char    *filename;
+    char             *full_text;
+    Line       *text_ptrs_right;
+    Line        *text_ptrs_left;
+    size_t             filesize;
+    size_t            lines_num;
+    const char        *filename;
 };
 
 struct File_info
