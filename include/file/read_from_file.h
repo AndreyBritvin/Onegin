@@ -25,7 +25,14 @@ struct Text
     const char    *filename;
 };
 
-typedef int (*Parse_file)(Text *, FILE *);
+struct File_info
+{
+    FILE          *file_ptr;
+    char          *filename;
+    char              *mode;
+};
+
+typedef int (*Parse_file_t)(Text *, FILE *);
 
 size_t read_line(char *input_array);
 
@@ -33,7 +40,7 @@ int read_n_lines(char *input_array, Line *input_ptrs, size_t lines);
 
 int init_file(Text *text, FILE *file_ptr);
 
-int work_file(const char *mode, Text *text, Parse_file parse_func);
+int work_file(const char *mode, Text *text, Parse_file_t parse_func);
 
 __off_t get_file_len(const char *filename);
 

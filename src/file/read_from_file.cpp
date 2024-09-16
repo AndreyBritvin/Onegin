@@ -36,7 +36,7 @@ int read_n_lines(char *input_array, Line *input_ptrs, size_t lines)
     return 0;
 }
 
-int init_file(Text *text, FILE *file_ptr)// TODO: file from Text struct delete and make func to fill Text
+int init_file(Text *text, FILE *file_ptr)
 {
     assert(text != NULL);
 
@@ -59,7 +59,7 @@ int init_file(Text *text, FILE *file_ptr)// TODO: file from Text struct delete a
     return 0;
 }
 
-int work_file(const char *mode, Text *text, Parse_file parse_file)
+int work_file(const char *mode, Text *text, Parse_file_t parse_file)
 {
     assert(text       != NULL);
     assert(mode       != NULL);
