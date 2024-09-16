@@ -23,7 +23,7 @@ int write_to_file(Text *text, FILE *file_ptr)
         fprintf(file_ptr, "%s\n", text->text_ptrs_right[i].line);
     }
 
-    fprintf(file_ptr, "Sorted right edge MeOwnegin:\n\n");
+    fprintf(file_ptr, "\nSorted right edge MeOwnegin:\n\n");
     for (size_t i = 0; i < text->lines_num; i++)
     {
         fprintf(file_ptr, "%s\n", text->text_ptrs_left[i].line);

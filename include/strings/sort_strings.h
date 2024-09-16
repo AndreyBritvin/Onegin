@@ -21,4 +21,8 @@ char *skip_non_alpha_left (char *str_ptr, char *min_ptr);
 int my_strcmp_begin(void *str_1, void *str_2);
 int my_strcmp_end(void *str_1, void *str_2);
 
+int my_qsort(void *arr, size_t arr_size, size_t el_size, comparator_t cmp_func);
+int quick_sort(void *arr, int left, int right, size_t el_size, comparator_t cmp_func);
+int partition (void *arr, int left, int right, size_t el_size, comparator_t cmp_func);
+
 #endif // SORT_STRINGS_H_xo

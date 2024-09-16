@@ -8,6 +8,11 @@
 #include "sort_strings.h"
 #include "swap_strings.h"
 
+int cmp_int(void *a, void *b)
+{
+    return (*(int*)a-*(int*)b);
+}
+
 int main()
 {
     struct Text Onegin = {};
@@ -42,9 +47,9 @@ int main()
         }
             )
 
-    bubble_sort(Onegin.text_ptrs_right, Onegin.lines_num, sizeof(Line), my_strcmp_begin);
+    my_qsort(Onegin.text_ptrs_right, Onegin.lines_num, sizeof(Line), my_strcmp_begin);
     DEBUG_ON(printf("Ended begin sort. Now gonna meowdoing left sort--------------------------------------------------\n"));
-    bubble_sort(Onegin.text_ptrs_left,  Onegin.lines_num, sizeof(Line), my_strcmp_end);
+    my_qsort(Onegin.text_ptrs_left,  Onegin.lines_num, sizeof(Line), my_strcmp_end);
 
     print_text(Onegin.text_ptrs_right, Onegin.lines_num);
     print_text(Onegin.text_ptrs_left, Onegin.lines_num);
@@ -61,5 +66,14 @@ int main()
     free(Onegin.text_ptrs_left);
     free(Onegin.text_ptrs_right); // Add Destroy (All to zeros)
 
+    /*int a[] = {9, 5, 2, 3, 1, 5, 6, 3};
+    // quick_sort(a, 0, sizeof(a)/sizeof(int) - 1, sizeof(int), cmp_int);
+    my_qsort(a, sizeof(a)/sizeof(int), sizeof(int), cmp_int);
+    for (int i = 0; i < sizeof(a)/sizeof(int); i++)
+    {
+        printf("%d ", a[i]);
+    }
+    printf("\n");
+*/
     return EXIT_SUCCESS;
 }

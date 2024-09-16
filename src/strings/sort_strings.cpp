@@ -38,6 +38,46 @@ char *skip_non_alpha_right(char *str_ptr)
     return str_ptr;
 }
 
+int my_qsort(void *arr, size_t arr_size, size_t el_size, comparator_t cmp_func)
+{
+    quick_sort(arr, 0, arr_size - 1, el_size, cmp_func);
+
+    return 0;
+}
+
+int quick_sort(void *arr, int left, int right, size_t el_size, comparator_t cmp_func)
+{
+    assert(arr != NULL);
+
+    if (left < right)
+    {
+        int partition_num = partition(arr, left, right, el_size, cmp_func);
+        quick_sort(arr, partition_num + 1, right, el_size, cmp_func);
+        quick_sort(arr, left, partition_num - 1, el_size, cmp_func);
+    }
+
+    return 0;
+}
+
+int partition(void *arr, int left, int right, size_t el_size, comparator_t cmp_func)
+{
+    assert(arr != NULL);
+
+    void *pivot = (char *) arr + right * el_size;
+    int x = left - 1;
+
+    for (int i = left; i <= right; i++)
+    {
+        if (cmp_func(((char *)arr + i * el_size), pivot) < 0)
+        {
+            x++;
+            universal_swap((char *) arr + i * el_size, (char *)arr + x * el_size, el_size);
+        }
+    }
+    universal_swap(arr + right * el_size, (char *)arr + (++x) * el_size, el_size);
+
+    return x;
+}
 
 char *skip_non_alpha_left(char *str_ptr, char *min_ptr)
 {
