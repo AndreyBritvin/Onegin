@@ -41,7 +41,7 @@ int main()
             printf("Len %lu of line %s\n", Onegin.text_ptrs[i].len, Onegin.text_ptrs[i].line);
         }
     );
-    bubble_sort(Onegin.text_ptrs, Onegin.lines_num, my_strcmp_end);
+    bubble_sort(Onegin.text_ptrs, Onegin.lines_num, sizeof(Line), my_strcmp_end);
     print_text(Onegin.text_ptrs, Onegin.lines_num);
 
     Onegin.filename = "texts/output/onegin_english.txt";
