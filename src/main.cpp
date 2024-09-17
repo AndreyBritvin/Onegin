@@ -8,11 +8,6 @@
 #include "sort_strings.h"
 #include "swap_strings.h"
 
-int cmp_int(void *a, void *b)
-{
-    return (*(int*)a-*(int*)b);
-}
-
 int main()
 {
     struct Text Onegin = {};

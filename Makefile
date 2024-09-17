@@ -17,9 +17,9 @@ endif
 
 all: a.out # double_procedures.o square_solver.o square_unit_test.o mode_parser.o main.o
 
-a.out: build/main.o build/read_from_file.o build/sort_strings.o build/swap_strings.o build/write_to_file.o
+a.out: build/main.o build/read_from_file.o build/sort_strings.o build/swap_strings.o build/write_to_file.o build/my_errors.o
 	@$(CC) $(CFLAGS) build/main.o build/sort_strings.o build/swap_strings.o build/read_from_file.o \
-					 build/write_to_file.o
+					 build/write_to_file.o build/my_errors.o
 
 build/main.o: src/main.cpp
 	@$(CC) $(CFLAGS) $(HEADERS_INCLUDE_STR) $(HEADERS_INCLUDE_FILE) -c src/main.cpp -o build/main.o
@@ -36,11 +36,15 @@ build/swap_strings.o: src/strings/swap_strings.cpp
 build/write_to_file.o: src/file/write_to_file.cpp include/file/write_to_file.h
 	@$(CC) $(CFLAGS) $(HEADERS_INCLUDE_FILE) -c src/file/write_to_file.cpp -o build/write_to_file.o
 
+build/my_errors.o: src/my_errors.cpp include/my_errors.h
+	@$(CC) $(CFLAGS) $(HEADERS_INCLUDE_FILE) -c src/my_errors.cpp -o build/my_errors.o
+
 comp_all:
 	@$(CC) $(CFLAGS) $(HEADERS_INCLUDE_FILE) -c src/file/write_to_file.cpp -o build/write_to_file.o
 	@$(CC) $(CFLAGS) $(HEADERS_INCLUDE_STR) -c src/strings/swap_strings.cpp -o build/swap_strings.o
 	@$(CC) $(CFLAGS) $(HEADERS_INCLUDE_STR) -c src/strings/sort_strings.cpp -o build/sort_strings.o
 	@$(CC) $(CFLAGS) $(HEADERS_INCLUDE_FILE) -c src/file/read_from_file.cpp -o build/read_from_file.o
+	@$(CC) $(CFLAGS) $(HEADERS_INCLUDE_FILE) -c src/my_errors.cpp -o build/my_errors.o
 	@$(CC) $(CFLAGS) $(HEADERS_INCLUDE_STR) $(HEADERS_INCLUDE_FILE) -c src/main.cpp -o build/main.o
 	make
 

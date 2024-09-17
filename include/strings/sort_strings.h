@@ -25,4 +25,6 @@ int my_qsort(void *arr, size_t arr_size, size_t el_size, comparator_t cmp_func);
 int quick_sort(void *arr, int left, int right, size_t el_size, comparator_t cmp_func);
 int partition (void *arr, int left, int right, size_t el_size, comparator_t cmp_func);
 
+int stalin_sort(void *void_arr_to_sort, size_t arr_num, size_t el_size, comparator_t cmp_func);
+
 #endif // SORT_STRINGS_H_xo
