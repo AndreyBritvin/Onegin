@@ -43,10 +43,7 @@ int destroy(void *arr_to_destroy, size_t arr_len, size_t el_size)
 {
     assert(arr_to_destroy != NULL);
 
-    for (size_t element = 0; element < arr_len; element++)
-    {
-        memset(arr_to_destroy, 0, el_size);
-    }
+    memset(arr_to_destroy, 0, el_size * arr_len);
 
     free(arr_to_destroy);
 
