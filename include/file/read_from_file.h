@@ -10,6 +10,7 @@
 #include <unistd.h>
 
 #include "macros.h"
+#include "my_errors.h"
 
 struct Line
 {

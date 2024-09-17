@@ -9,7 +9,7 @@ int swap_strings(char **str_to_swap_1, char **str_to_swap_2)
     *str_to_swap_1 = *str_to_swap_2;
     *str_to_swap_2 = tmp_c;
 
-    return 0;
+    return SUCCESS;
 }
 
 int swap_lines(Line *str_to_swap_1, Line *str_to_swap_2)
@@ -21,7 +21,7 @@ int swap_lines(Line *str_to_swap_1, Line *str_to_swap_2)
     *str_to_swap_1 = *str_to_swap_2;
     *str_to_swap_2 = tmp_c;
 
-    return 0;
+    return SUCCESS;
 }
 
 int universal_swap(void *to_swap_1, void *to_swap_2, size_t el_size)
@@ -38,5 +38,5 @@ int universal_swap(void *to_swap_1, void *to_swap_2, size_t el_size)
                                           *byte_to_swap_2++ = buffer_byte;
     }
 
-    return 0;
+    return SUCCESS;
 }

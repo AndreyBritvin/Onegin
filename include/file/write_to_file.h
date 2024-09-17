@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "read_from_file.h"
+#include "my_errors.h"
 
 int print_text(Line *onegin_ptrs, size_t lines_amount);
 

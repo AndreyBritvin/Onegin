@@ -8,6 +8,8 @@
 #include "sort_strings.h"
 #include "swap_strings.h"
 
+#include "my_errors.h"
+
 int main()
 {
     struct Text Onegin = {};
@@ -22,14 +24,14 @@ int main()
 
     if (Onegin.full_text == NULL)
     {
-        fprintf(stderr, "Error in calloc for <onegin_text> with size: %lu\n", Onegin.filesize);
+        PRINT_ERROR("Error in calloc for <onegin_text> with size: %lu\n", Onegin.filesize);
 
-        return EXIT_FAILURE;
+        return ERROR_CALLOC_IS_NULL;
     }
 
-    if (int err_num = work_file("r", &Onegin, init_file))
+    if (work_file("r", &Onegin, init_file))
     {
-        fprintf(stderr, "Error in reading file <%s>:%s\n", Onegin.filename, strerror(err_num));
+        PRINT_ERROR("Error in reading file <%s>:%s\n", Onegin.filename, strerror(errno));
 
         return EXIT_FAILURE;
     }
@@ -50,9 +52,9 @@ int main()
     print_text(Onegin.text_ptrs_left, Onegin.lines_num);
 
     Onegin.filename = "texts/output/onegin_english.txt";
-    if (int err_num = work_file("w", &Onegin, write_to_file))
+    if (work_file("w", &Onegin, write_to_file))
     {
-        fprintf(stderr, "Error in writing file <%s>:%s\n", Onegin.filename, strerror(err_num));
+        PRINT_ERROR("Error in writing file <%s>:%s\n", Onegin.filename, strerror(errno));
 
         return EXIT_FAILURE;
     }

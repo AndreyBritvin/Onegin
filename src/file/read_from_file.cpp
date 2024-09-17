@@ -33,7 +33,7 @@ int read_n_lines(char *input_array, Line *input_ptrs, size_t lines)
         // DEBUG_ON(printf("input_ptrs[i] = %s, size = %d\n", input_ptrs[i].line, input_ptrs[i].len);)
     }
 
-    return 0;
+    return SUCCESS;
 }
 
 int init_file(Text *text, FILE *file_ptr)
@@ -50,24 +50,25 @@ int init_file(Text *text, FILE *file_ptr)
 
     if (text->text_ptrs_right == NULL)
     {
-        fprintf(stderr, "Error in calloc in line: %d\n", __LINE__); // TODO: Error enum / maybe lib
-        return 1;
+        PRINT_ERROR("Error in calloc in line: %d\n", __LINE__); // TODO: Error enum / maybe lib
+
+        return ERROR_CALLOC_IS_NULL;
     }
 
     text->text_ptrs_left = (Line *) calloc(text->lines_num + 1, sizeof(Line));
 
     if (text->text_ptrs_left == NULL)
     {
-        fprintf(stderr, "Error in calloc in line: %d\n", __LINE__); // TODO: Error enum / maybe lib
+        PRINT_ERROR("Error in calloc in line: %d\n", __LINE__); // TODO: Error enum / maybe lib
 
-        return 1;
+        return ERROR_CALLOC_IS_NULL;
     }
 
     read_n_lines(text->full_text, text->text_ptrs_right, text->lines_num);
     memcpy(text->text_ptrs_left, text->text_ptrs_right, text->lines_num * sizeof(Line));
     printf("Size of pointers = %lu\n", sizeof(text->text_ptrs_right));
 
-    return 0;
+    return SUCCESS;
 }
 
 int work_file(const char *mode, Text *text, Parse_file_t parse_file)
@@ -80,19 +81,19 @@ int work_file(const char *mode, Text *text, Parse_file_t parse_file)
 
     if ((file_input = fopen(text->filename, mode)) == NULL)
     {
-        return errno;
+        return ERROR_FILE_IS_NULL;
     }
 
     parse_file(text, file_input);
 
     if (fclose(file_input))
     {
-        return errno;
+        return ERROR_FILE_IS_NULL;
     }
 
     DEBUG_ON(printf("Success in closing file %s\n", text->filename);)
 
-    return 0;
+    return SUCCESS;
 }
 
 __off_t get_file_len(const char *filename)

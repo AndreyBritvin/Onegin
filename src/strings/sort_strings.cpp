@@ -18,24 +18,10 @@ int bubble_sort(void *void_arr_to_sort, size_t arr_num, size_t el_size, comparat
             {
                 universal_swap(el_1, el_2, el_size);
             }
-            // DEBUG_ON(printf("\ni = %lu j = %lu\n%s\n%s\n = %d\n", i, j, arr_to_sort[j], arr_to_sort[j + 1],
-                                    // cmp_func(arr_to_sort[j].line, arr_to_sort[j + 1].line));)
         }
     }
 
     return 0;
-}
-
-char *skip_non_alpha_right(char *str_ptr)
-{
-    assert(str_ptr != NULL);
-
-    while (!isalnum(*str_ptr) && *str_ptr != '\0')
-    {
-        str_ptr++;
-    }
-
-    return str_ptr;
 }
 
 int my_qsort(void *arr, size_t arr_size, size_t el_size, comparator_t cmp_func)
@@ -91,6 +77,18 @@ int stalin_sort(void *void_arr_to_sort, size_t arr_num, size_t el_size, comparat
     }
 
     return 0;
+}
+
+char *skip_non_alpha_right(char *str_ptr)
+{
+    assert(str_ptr != NULL);
+
+    while (!isalnum(*str_ptr) && *str_ptr != '\0')
+    {
+        str_ptr++;
+    }
+
+    return str_ptr;
 }
 
 char *skip_non_alpha_left(char *str_ptr, char *min_ptr)
