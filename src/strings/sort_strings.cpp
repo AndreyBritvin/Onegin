@@ -64,7 +64,7 @@ int partition(void *arr, int left, int right, size_t el_size, comparator_t cmp_f
             universal_swap((char *) arr + i * el_size, (char *)arr + x * el_size, el_size);
         }
     }
-    universal_swap(arr + right * el_size, (char *)arr + (++x) * el_size, el_size);
+    universal_swap((char *)arr + right * el_size, (char *)arr + (++x) * el_size, el_size);
 
     return x;
 }

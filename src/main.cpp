@@ -59,9 +59,9 @@ int main()
         return EXIT_FAILURE;
     }
 
-    free(Onegin.full_text);
-    free(Onegin.text_ptrs_left);
-    free(Onegin.text_ptrs_right); // Add Destroy (All to zeros)
+    destroy(Onegin.full_text,       Onegin.filesize,  sizeof(Onegin.full_text[0]));
+    destroy(Onegin.text_ptrs_left,  Onegin.lines_num, sizeof(Line));
+    destroy(Onegin.text_ptrs_right, Onegin.lines_num, sizeof(Line)); // Add Destroy (All to zeros)
 
     /*int a[] = {9, 5, 2, 3, 1, 5, 6, 3};
     // quick_sort(a, 0, sizeof(a)/sizeof(int) - 1, sizeof(int), cmp_int);

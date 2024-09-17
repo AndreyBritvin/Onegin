@@ -84,7 +84,10 @@ int work_file(const char *mode, Text *text, Parse_file_t parse_file)
         return ERROR_FILE_IS_NULL;
     }
 
-    parse_file(text, file_input);
+    if (int err_num = parse_file(text, file_input))
+    {
+        return err_num;
+    }
 
     if (fclose(file_input))
     {
