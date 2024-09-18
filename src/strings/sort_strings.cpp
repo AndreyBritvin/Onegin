@@ -105,7 +105,7 @@ char *skip_non_alpha_left(char *str_ptr, char *min_ptr)
     return str_ptr;
 }
 
-int my_strcmp_begin(void *vstr_1, void *vstr_2)
+int my_strcmp_begin(const void *vstr_1, const void *vstr_2)
 {
     assert(vstr_1 != NULL);
     assert(vstr_2 != NULL);
@@ -142,7 +142,7 @@ int my_strcmp_begin(void *vstr_1, void *vstr_2)
     return 0;
 }
 
-int my_strcmp_end(void *vstr_1, void *vstr_2)
+int my_strcmp_end(const void *vstr_1, const void *vstr_2)
 {
     assert(vstr_1 != NULL);
     assert(vstr_2 != NULL);
@@ -180,4 +180,26 @@ int my_strcmp_end(void *vstr_1, void *vstr_2)
     }
 
     return 0;
+}
+
+
+int sorting_unit_test(Text text, comparator_t cmp_func)
+{
+    DEBUG_ON(printf("Entered Sorting");)
+    qsort(   text.text_ptrs_control, text.lines_num, sizeof(Line), cmp_func);
+    my_qsort(text.text_ptrs_right,   text.lines_num, sizeof(Line), cmp_func);
+
+    for (size_t i = 0; i < text.lines_num; i++)
+    {
+        if (text.text_ptrs_control[i].line != text.text_ptrs_right[i].line)
+        {
+            PRINT_ERROR("Wrong order at i = %lu:\n"
+                        "Control:    %s"
+                        "My sorting: %s", i, text.text_ptrs_control[i].line, text.text_ptrs_right[i].line);
+
+            return ERROR_UNIT_TEST;
+        }
+    }
+
+    return SUCCESS;
 }

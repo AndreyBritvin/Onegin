@@ -8,6 +8,7 @@ enum MY_ERRORS
     SUCCESS                 ,
     ERROR_CALLOC_IS_NULL    ,
     ERROR_FILE_IS_NULL      ,
+    ERROR_UNIT_TEST         ,
 };
 
 #define PRINT_ERROR(...); fprintf(stderr, __VA_ARGS__);

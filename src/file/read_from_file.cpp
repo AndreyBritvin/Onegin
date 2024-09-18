@@ -64,8 +64,19 @@ int init_file(Text *text, FILE *file_ptr)
         return ERROR_CALLOC_IS_NULL;
     }
 
-    read_n_lines(text->full_text, text->text_ptrs_right, text->lines_num);
-    memcpy(text->text_ptrs_left, text->text_ptrs_right, text->lines_num * sizeof(Line));
+    // text->text_ptrs_control = (Line *) calloc(text->lines_num + 1, sizeof(Line));
+
+    // if (text->text_ptrs_control == NULL)
+    {
+        // PRINT_ERROR("Error in calloc in line: %d\n", __LINE__); // TODO: Error enum / maybe lib
+
+        // return ERROR_CALLOC_IS_NULL;
+    }
+
+    read_n_lines(text->full_text,   text->text_ptrs_right, text->lines_num);
+    memcpy(text->text_ptrs_left,    text->text_ptrs_right, text->lines_num * sizeof(Line));
+    // memcpy(text->text_ptrs_control, text->text_ptrs_right, text->lines_num * sizeof(Line));
+
     printf("Size of pointers = %lu\n", sizeof(text->text_ptrs_right));
 
     return SUCCESS;

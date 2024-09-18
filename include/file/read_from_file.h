@@ -23,6 +23,7 @@ struct Text
     char             *full_text;
     Line       *text_ptrs_right;
     Line        *text_ptrs_left;
+    Line     *text_ptrs_control;
     size_t             filesize;
     size_t            lines_num;
     const char        *filename;

@@ -47,6 +47,7 @@ int main()
     my_qsort(Onegin.text_ptrs_right, Onegin.lines_num, sizeof(Line), my_strcmp_begin);
     DEBUG_ON(printf("Ended begin sort. Now gonna meowdoing left sort--------------------------------------------------\n"));
     my_qsort(Onegin.text_ptrs_left,  Onegin.lines_num, sizeof(Line), my_strcmp_end);
+    // sorting_unit_test(Onegin, my_strcmp_begin);
 
     print_text(Onegin.text_ptrs_right, Onegin.lines_num);
     print_text(Onegin.text_ptrs_left, Onegin.lines_num);
