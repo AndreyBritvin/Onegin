@@ -36,6 +36,32 @@ int read_n_lines(char *input_array, Line *input_ptrs, size_t lines)
     return SUCCESS;
 }
 
+int create_text(Text *text_to_fill, char *filename)
+{
+    text_to_fill->filename = filename;
+
+    text_to_fill->filesize = (size_t) get_file_len(text_to_fill->filename);
+    DEBUG_ON(printf("File size: %lu\n", text_to_fill->filesize);)
+
+    text_to_fill->full_text = (char  *) calloc(text_to_fill->filesize + 1, sizeof(char));
+
+    if (text_to_fill->full_text == NULL)
+    {
+        PRINT_ERROR("Error in calloc for <onegin_text> with size: %lu\n", text_to_fill->filesize);
+
+        return ERROR_CALLOC_IS_NULL;
+    }
+
+    if (work_file("r", text_to_fill, init_file))
+    {
+        PRINT_ERROR("Error in reading file <%s>:%s\n", text_to_fill->filename, strerror(errno));
+
+        return EXIT_FAILURE;
+    }
+
+    return SUCCESS;
+}
+
 int init_file(Text *text, FILE *file_ptr)
 {
     assert(text != NULL);

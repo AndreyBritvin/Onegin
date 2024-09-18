@@ -11,4 +11,6 @@ int write_to_file(Text *text, FILE *file_ptr);
 
 int destroy(void *arr_to_destroy, size_t arr_len, size_t el_size);
 
+int destroy_text(Text *text_to_destr);
+
 #endif // WRITE_TO_FILE_H_

@@ -54,3 +54,12 @@ int destroy(void *arr_to_destroy, size_t arr_len, size_t el_size)
 
     return SUCCESS;
 }
+
+int destroy_text(Text *text_to_destr)
+{
+    destroy(text_to_destr->full_text,       text_to_destr->filesize,  sizeof(text_to_destr->full_text[0]));
+    destroy(text_to_destr->text_ptrs_left,  text_to_destr->lines_num, sizeof(Line));
+    destroy(text_to_destr->text_ptrs_right, text_to_destr->lines_num, sizeof(Line));
+
+    return SUCCESS;
+}
