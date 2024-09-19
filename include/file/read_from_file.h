@@ -12,6 +12,8 @@
 #include "macros.h"
 #include "my_errors.h"
 
+static char *GULAG_ADDR = (char *) NULL + 2;
+
 struct Line
 {
     char                  *line;
@@ -50,6 +52,6 @@ __off_t get_file_len(const char *filename);
 
 size_t get_lines_num(char *text, size_t text_len);
 
-int create_text(Text *text_to_fill, char *filename);
+int create_text(Text *text_to_fill, const char *filename);
 
 #endif // READ_FROM_FILE_H_

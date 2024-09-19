@@ -11,8 +11,8 @@ int bubble_sort(void *void_arr_to_sort, size_t arr_num, size_t el_size, comparat
     {
         for (size_t j = 0; j < arr_num - i - 1; j++)
         {
-            void *el_1 = &arr_to_sort[j*el_size];
-            void *el_2 = &arr_to_sort[j*el_size + el_size];
+            void *el_1 = &arr_to_sort[j * el_size];
+            void *el_2 = &arr_to_sort[j * el_size + el_size];
 
             if (cmp_func(el_1, el_2) > 0)
             {
@@ -58,7 +58,7 @@ int partition(void *arr, int left, int right, size_t el_size, comparator_t cmp_f
 
     for (int i = left; i <= right; i++)
     {
-        if (cmp_func(((char *)arr + i * el_size), pivot) < 0)
+        if (cmp_func(((char *)arr + i * el_size), pivot) > 0)
         {
             x++;
             universal_swap((char *) arr + i * el_size, (char *)arr + x * el_size, el_size);
@@ -69,11 +69,27 @@ int partition(void *arr, int left, int right, size_t el_size, comparator_t cmp_f
     return x;
 }
 
-int stalin_sort(void *void_arr_to_sort, size_t arr_num, size_t el_size, comparator_t cmp_func)
+int stalin_sort(Line *arr_to_sort, size_t arr_num, size_t el_size, comparator_t cmp_func)
 {
-    for (size_t i = 0; i < arr_num; i++)
-    {
+    assert(arr_to_sort != NULL);
 
+    // char *arr_to_sort = (char *) void_arr_to_sort;
+    Line *last_normal_line = &arr_to_sort[0];
+    bool is_gulag = false;
+    bool is_first = true;
+
+    for (size_t i = 0; i < arr_num - 1; i++)
+    {
+        Line *el_2 = &arr_to_sort[i + 1];
+
+        if (cmp_func(last_normal_line, el_2) > 0)
+        {
+            arr_to_sort[i + 1].line = GULAG_ADDR;
+        }
+        else
+        {
+            last_normal_line = el_2;
+        }
     }
 
     return 0;

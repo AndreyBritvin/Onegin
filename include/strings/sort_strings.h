@@ -27,7 +27,7 @@ int my_qsort  (void *arr_to_sort,     size_t arr_size, size_t el_size, comparato
 int quick_sort(void *arr_to_sort, int left, int right, size_t el_size, comparator_t cmp_func);
 int partition (void *arr_to_sort, int left, int right, size_t el_size, comparator_t cmp_func);
 
-int stalin_sort(void *void_arr_to_sort, size_t arr_num, size_t el_size, comparator_t cmp_func);
+int stalin_sort(Line *void_arr_to_sort, size_t arr_num, size_t el_size, comparator_t cmp_func);
 
 int sorting_unit_test(Text text, comparator_t cmp_func);
 

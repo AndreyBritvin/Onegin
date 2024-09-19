@@ -36,7 +36,7 @@ int read_n_lines(char *input_array, Line *input_ptrs, size_t lines)
     return SUCCESS;
 }
 
-int create_text(Text *text_to_fill, char *filename)
+int create_text(Text *text_to_fill, const char *filename)
 {
     text_to_fill->filename = filename;
 

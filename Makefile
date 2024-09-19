@@ -1,8 +1,9 @@
 COMP_MODE = DEBUG
+IS_STALIN = -DNO_STALIN
 
 CC = g++
 
-DEBUG_FLAG = -DDEBUG_MODE
+DEBUG_FLAG = -DDEBUG_MODE $(IS_STALIN)
 HEADERS_INCLUDE_FILE = -Iinclude/file
 HEADERS_INCLUDE_STR = -Iinclude/strings $(HEADERS_INCLUDE_FILE)
 
@@ -49,7 +50,7 @@ comp_all:
 	make
 
 run:
-	./a.out
+	./a.out texts/input/onegin_english.txt texts/output/onegin_full_2.txt
 
 clean:
 	rm a.out

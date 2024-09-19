@@ -19,9 +19,19 @@ int write_to_file(Text *text, FILE *file_ptr)
 {
     DEBUG_ON(printf("Entering write_to_file_func\n");)
 
-    fprintf(file_ptr, "Sorted right edge MeOwnegin:\n\n");
+    fprintf(file_ptr, "Sorted left edge MeOwnegin:\n\n");
     for (size_t i = 0; i < text->lines_num; i++)
     {
+        #ifdef STALIN
+        DEBUG_ON(
+                printf("Len %lu of line %p\n", text->text_ptrs_left[i].len, text->text_ptrs_left[i].line);
+                )
+        if (text->text_ptrs_right[i].line == GULAG_ADDR)
+        {
+            DEBUG_ON(printf("Yes_yes\n"));
+            continue;
+        }
+        #endif
         fprintf(file_ptr, "%s\n", text->text_ptrs_right[i].line);
     }
     DEBUG_ON(printf("Printed Right Sorted MeowNegin\n");)
@@ -29,6 +39,17 @@ int write_to_file(Text *text, FILE *file_ptr)
     fprintf(file_ptr, "\nSorted right edge MeOwnegin:\n\n");
     for (size_t i = 0; i < text->lines_num; i++)
     {
+        #ifdef STALIN
+        DEBUG_ON(
+                printf("Len %lu of line %p, %lu\n", text->text_ptrs_left[i].len, text->text_ptrs_left[i].line,
+                                                    text->text_ptrs_left[i].line);
+                )
+        if (text->text_ptrs_left[i].line == GULAG_ADDR)
+        {
+            DEBUG_ON(printf("no_no\n"));
+            continue;
+        }
+        #endif
         fprintf(file_ptr, "%s\n", text->text_ptrs_left[i].line);
     }
     DEBUG_ON(printf("Printed Left Sorted MeowNegin\n");)
