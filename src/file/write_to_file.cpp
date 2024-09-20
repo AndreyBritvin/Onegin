@@ -2,6 +2,8 @@
 
 int print_text(Line *onegin_ptrs, size_t lines_amount)
 {
+    assert(onegin_ptrs != NULL);
+
     printf("Sorted_onegin:----------------------------------\n\n");
     for (size_t i = 0; i < lines_amount; i++)
     {
@@ -17,6 +19,9 @@ int print_text(Line *onegin_ptrs, size_t lines_amount)
 
 int write_to_file(Text *text, FILE *file_ptr)
 {
+    assert(text     != NULL);
+    assert(file_ptr != NULL);
+
     DEBUG_ON(printf("Entering write_to_file_func\n");)
 
     fprintf(file_ptr, "Sorted left edge MeOwnegin:\n\n");
@@ -78,6 +83,8 @@ int destroy(void *arr_to_destroy, size_t arr_len, size_t el_size)
 
 int destroy_text(Text *text_to_destr)
 {
+    assert(text_to_destr != NULL);
+
     destroy(text_to_destr->full_text,       text_to_destr->filesize,  sizeof(text_to_destr->full_text[0]));
     destroy(text_to_destr->text_ptrs_left,  text_to_destr->lines_num, sizeof(Line));
     destroy(text_to_destr->text_ptrs_right, text_to_destr->lines_num, sizeof(Line));

@@ -2,6 +2,8 @@
 
 size_t read_line(char input_array[])
 {
+    assert(input_array != NULL);
+
     char ch = 0;
     size_t index = 0;
 
@@ -38,6 +40,9 @@ int read_n_lines(char *input_array, Line *input_ptrs, size_t lines)
 
 int create_text(Text *text_to_fill, const char *filename)
 {
+    assert(text_to_fill != NULL);
+    assert(filename     != NULL);
+
     text_to_fill->filename = filename;
 
     text_to_fill->filesize = (size_t) get_file_len(text_to_fill->filename);
@@ -85,7 +90,7 @@ int init_file(Text *text, FILE *file_ptr)
 
     if (text->text_ptrs_left == NULL)
     {
-        PRINT_ERROR("Error in calloc in line: %d\n", __LINE__); // TODO: Error enum / maybe lib
+        PRINT_ERROR("Error in calloc in line: %d\n", __LINE__);
 
         return ERROR_CALLOC_IS_NULL;
     }
@@ -93,11 +98,11 @@ int init_file(Text *text, FILE *file_ptr)
     // text->text_ptrs_control = (Line *) calloc(text->lines_num + 1, sizeof(Line));
 
     // if (text->text_ptrs_control == NULL)
-    {
-        // PRINT_ERROR("Error in calloc in line: %d\n", __LINE__); // TODO: Error enum / maybe lib
+    // {
+        // PRINT_ERROR("Error in calloc in line: %d\n", __LINE__);
 
         // return ERROR_CALLOC_IS_NULL;
-    }
+    // }
 
     read_n_lines(text->full_text,   text->text_ptrs_right, text->lines_num);
     memcpy(text->text_ptrs_left,    text->text_ptrs_right, text->lines_num * sizeof(Line));

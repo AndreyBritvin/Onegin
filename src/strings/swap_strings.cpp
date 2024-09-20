@@ -26,6 +26,9 @@ int swap_lines(Line *str_to_swap_1, Line *str_to_swap_2)
 
 int universal_swap(void *to_swap_1, void *to_swap_2, size_t el_size)
 {
+    assert(to_swap_1 != NULL);
+    assert(to_swap_2 != NULL);
+
     char buffer_byte = 0;
 
     char *byte_to_swap_1 = (char *) to_swap_1;

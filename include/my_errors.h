@@ -5,10 +5,10 @@
 
 enum MY_ERRORS
 {
-    SUCCESS                 ,
-    ERROR_CALLOC_IS_NULL    ,
-    ERROR_FILE_IS_NULL      ,
-    ERROR_UNIT_TEST         ,
+    SUCCESS                 = 0,
+    ERROR_CALLOC_IS_NULL    = 1,
+    ERROR_FILE_IS_NULL      = 2,
+    ERROR_UNIT_TEST         = 3,
 };
 
 #define PRINT_ERROR(...); fprintf(stderr, __VA_ARGS__);
