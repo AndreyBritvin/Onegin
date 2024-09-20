@@ -21,7 +21,7 @@ int bubble_sort(void *void_arr_to_sort, size_t arr_num, size_t el_size, comparat
         }
     }
 
-    return 0;
+    return SUCCESS;
 }
 
 int my_qsort(void *arr, size_t arr_size, size_t el_size, comparator_t cmp_func)
@@ -31,7 +31,7 @@ int my_qsort(void *arr, size_t arr_size, size_t el_size, comparator_t cmp_func)
 
     quick_sort(arr, 0, arr_size - 1, el_size, cmp_func);
 
-    return 0;
+    return SUCCESS;
 }
 
 int quick_sort(void *arr, int left, int right, size_t el_size, comparator_t cmp_func)
@@ -45,7 +45,7 @@ int quick_sort(void *arr, int left, int right, size_t el_size, comparator_t cmp_
         quick_sort(arr, left, partition_num - 1, el_size, cmp_func);
     }
 
-    return 0;
+    return SUCCESS;
 }
 
 
@@ -58,7 +58,7 @@ int partition(void *arr, int left, int right, size_t el_size, comparator_t cmp_f
 
     for (int i = left; i <= right; i++)
     {
-        if (cmp_func(((char *)arr + i * el_size), pivot) > 0)
+        if (cmp_func(((char *)arr + i * el_size), pivot) < 0)
         {
             x++;
             universal_swap((char *) arr + i * el_size, (char *)arr + x * el_size, el_size);
@@ -92,7 +92,7 @@ int stalin_sort(Line *arr_to_sort, size_t arr_num, size_t el_size, comparator_t 
         }
     }
 
-    return 0;
+    return SUCCESS;
 }
 
 char *skip_non_alpha_right(char *str_ptr)
@@ -155,7 +155,7 @@ int my_strcmp_begin(const void *vstr_1, const void *vstr_2)
         }
     }
 
-    return 0;
+    return SUCCESS;
 }
 
 int my_strcmp_end(const void *vstr_1, const void *vstr_2)
@@ -195,7 +195,7 @@ int my_strcmp_end(const void *vstr_1, const void *vstr_2)
         }
     }
 
-    return 0;
+    return SUCCESS;
 }
 
 

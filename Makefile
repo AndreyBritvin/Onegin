@@ -50,7 +50,7 @@ comp_all:
 	make
 
 run:
-	./a.out texts/input/onegin_english.txt texts/output/onegin_full_2.txt
+	./a.out texts/input/onegin_english.txt texts/output/onegin_full_3.txt
 
 clean:
 	rm a.out

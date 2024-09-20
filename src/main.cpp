@@ -32,9 +32,9 @@ int main(const int argc, const char **argv)
             )
 
     #ifndef STALIN
-    my_qsort(Onegin.text_ptrs_right, Onegin.lines_num, sizeof(Line), my_strcmp_begin);
+    my_qsort(Onegin.text_ptrs_right, Onegin.lines_num, sizeof(Onegin.text_ptrs_right[0]), my_strcmp_begin);
     DEBUG_ON(printf("Ended begin sort. Now gonna meowdoing left sort--------------------------------------------------\n"));
-    my_qsort(Onegin.text_ptrs_left,  Onegin.lines_num, sizeof(Line), my_strcmp_end);
+    my_qsort(Onegin.text_ptrs_left,  Onegin.lines_num, sizeof(Onegin.text_ptrs_left[0]) , my_strcmp_end);
     DEBUG_ON(printf("We are in quick sort\n");)
 
     print_text(Onegin.text_ptrs_right, Onegin.lines_num);

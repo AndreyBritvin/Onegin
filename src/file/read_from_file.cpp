@@ -81,7 +81,7 @@ int init_file(Text *text, FILE *file_ptr)
 
     if (text->text_ptrs_right == NULL)
     {
-        PRINT_ERROR("Error in calloc in line: %d\n", __LINE__); // TODO: Error enum / maybe lib
+        PRINT_ERROR("Error in calloc in line: %d\n", __LINE__);
 
         return ERROR_CALLOC_IS_NULL;
     }
