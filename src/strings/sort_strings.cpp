@@ -41,8 +41,8 @@ int quick_sort(void *arr, int left, int right, size_t el_size, comparator_t cmp_
     if (left < right)
     {
         int partition_num = partition(arr, left, right, el_size, cmp_func);
-        quick_sort(arr, partition_num + 1, right, el_size, cmp_func);
-        quick_sort(arr, left, partition_num - 1, el_size, cmp_func);
+        quick_sort(arr, partition_num + 1, right,             el_size, cmp_func);
+        quick_sort(arr, left,              partition_num - 1, el_size, cmp_func);
     }
 
     return SUCCESS;
@@ -54,19 +54,19 @@ int partition(void *arr, int left, int right, size_t el_size, comparator_t cmp_f
     assert(arr != NULL);
 
     void *pivot = (char *) arr + right * el_size;
-    int x = left - 1;
+    int last_pos = left - 1;
 
     for (int i = left; i <= right; i++)
     {
         if (cmp_func(((char *)arr + i * el_size), pivot) < 0)
         {
-            x++;
-            universal_swap((char *) arr + i * el_size, (char *)arr + x * el_size, el_size);
+            last_pos++;
+            universal_swap((char *) arr + i * el_size, (char *)arr + last_pos * el_size, el_size);
         }
     }
-    universal_swap((char *)arr + right * el_size, (char *)arr + (++x) * el_size, el_size);
+    universal_swap((char *)arr + right * el_size, (char *)arr + (++last_pos) * el_size, el_size);
 
-    return x;
+    return last_pos;
 }
 
 int stalin_sort(Line *arr_to_sort, size_t arr_num, size_t el_size, comparator_t cmp_func)
